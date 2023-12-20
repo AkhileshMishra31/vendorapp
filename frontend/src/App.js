@@ -23,6 +23,7 @@ function App() {
   useEffect(() => {
     console.log("reloading")
     Store.dispatch(loadUser());
+    console.log("i want to merge it")
   }, []);
 
   return loading ? <h1>loading</h1>: (
