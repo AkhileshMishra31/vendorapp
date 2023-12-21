@@ -10,12 +10,16 @@ import {
     AiOutlineSearch,
     AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
+
 
 import { CgProfile } from "react-icons/cg";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import Cart from '../Cart/Cart.jsx';
 import WishList from '../WishList/WishList.jsx';
+import { RxCross1 } from 'react-icons/rx';
 
 
 const Header = ({ activeHeading }) => {
@@ -26,7 +30,8 @@ const Header = ({ activeHeading }) => {
     const [active, setActive] = useState(false);
     const [dropDown, setDropDown] = useState(false);
     const [opencart, setOpenCart] = useState(false);
-    const [openWishlist,setOpenWishlist]=useState(false)
+    const [openWishlist, setOpenWishlist] = useState(false)
+    const [openSidebar, setopenSidebar] = useState(false);
     // const [activeHeading, setActiveHeading] = useState(1);
 
 
@@ -148,7 +153,7 @@ const Header = ({ activeHeading }) => {
                         <div className={`${styles.noramlFlex}`}>
                             <div
                                 className="relative cursor-pointer mr-[15px]"
-                                onClick={() => {setOpenWishlist(true) }}
+                                onClick={() => { setOpenWishlist(true) }}
                             >
                                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
@@ -206,6 +211,113 @@ const Header = ({ activeHeading }) => {
 
                 </div>
             </div>
+            <div className='w-full fixed top-0 left-0 h-[50px] bg-[#fff] shadow-sm 800px:hidden z-50'>
+                {/* hamburger menu */}
+                <div className='w-full h-full flex justify-between items-center p-5'>
+                    <div className='flex items-center'>
+                        <FaBars size={30} onClick={() => setopenSidebar(true)} />
+                    </div>
+                    <div className='flex items-center pr-3'>
+                        <img
+                            src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+                            alt=""
+                            className='h-[30px]'
+                        />
+                    </div>
+                    <div
+                        onClick={() => { setOpenCart(true) }}
+                        className='relative'
+                    >
+                        <AiOutlineShoppingCart size={30} color="#000" />
+                        <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                            {/* {cart && cart.length} */}0
+                        </span>
+                    </div>
+                </div>
+                {
+                    openSidebar ? (
+                        <div className='w-[100vw] h-[100vh] bg-[#0000005f] z-20 fixed top-0 left-0'>
+                            <div className='fixed w-[60%] bg-white h-full z-[10] top-0 left-0 overflow-y-auto'>
+                                <div className='flex justify-between items-center'>
+                                    {/* cart */}
+                                    <div>
+                                        <div className='relative mr-[15px]'>
+                                            <AiOutlineHeart size={30} className='mt-5 ml-3' />
+                                            <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                                                {/* {cart && cart.length} */}0
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <RxCross1 size={30} className='ml-4 mt-5' onClick={() => setopenSidebar(false)} />
+                                </div>
+                                <div className='relative my-8 h-[40px] w-[90%] mx-auto mt-[25px]'>
+                                    <input
+                                        type='text'
+                                        placeholder='Search products..'
+                                        className=' w-full p-[5px] border-[3px] border-[#4646b5] rounded'
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                    {
+                                        searchTerm && searchData.length !== 0 ? (
+                                            <div className='absolute bg-[#fff] w-full left-0 p-3 z-[10]'>
+                                                {searchData && searchData.map((i, index) => {
+                                                    return (
+                                                        <Link to={`/product/${i._id}`}>
+
+                                                            <div className='flex justify-between items-center p-[10px]'>
+                                                                <img
+                                                                    src={`https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg` || 'fallback-image-url'} // Use a fallback image URL if 'url' is undefined
+                                                                    alt=""
+                                                                    className="w-[30px] h-[30px] mr-[10px]"
+                                                                />
+                                                                <h1 className='text-[10px]'>{i.name}</h1>
+                                                            </div>
+                                                        </Link>
+                                                    )
+                                                })}
+                                            </div>
+                                        ) : null
+                                    }
+
+                                </div>
+                                <Nav active={activeHeading} />
+                                <div className='p-[10px]'>
+                                    <div className={`${styles.button}`}>
+                                        <Link to={`${isSeller ? "/dashboard" : "/shop-create"}`}>
+                                            <h1 className="text-[#fff] flex items-center">
+                                                {isSeller ? "Go Dashboard" : "Become Seller"}{" "}
+                                                <IoIosArrowForward className="ml-1" />
+                                            </h1>
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className='flex justify-center items-center p-[10px]'>
+
+                                    {isAuthenticated ? (
+                                        <Link to="/profile">
+                                            <img
+                                                src={`${user?.avatar?.url}`}
+                                                className="w-[35px] h-[35px] rounded-full border-[6px] border"
+                                                alt=""
+                                            />
+                                        </Link>
+                                    ) : (
+                                        <Link to="/login">
+                                            <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                                        </Link>
+                                    )}
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    ) : null
+                }
+            </div>
+
         </>
     )
 }
