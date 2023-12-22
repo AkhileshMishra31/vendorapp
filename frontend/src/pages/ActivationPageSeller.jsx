@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { server } from "../server";
 
-const ActivationPage = () => {
+const ActivationPageSeller = () => {
   const { token } = useParams();
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const activationEmail = async () => {
       try {
-        const res = await axios.post(`${server}/user/activation`, {
+        const res = await axios.post(`${server}/shop/activation`, {
           activation_token: token,
         });
         console.log(res);
@@ -31,5 +31,4 @@ const ActivationPage = () => {
   );
 };
 
-
-export default ActivationPage;
+export default ActivationPageSeller;

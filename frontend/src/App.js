@@ -7,10 +7,14 @@ import { HomePage } from "./Routes.js";
 import { ProductPage } from "./Routes.js";
 import { BestSellingPage } from "./Routes.js";
 import { ActivationPage } from "./Routes";
+import { ShopLoginPage } from "./Routes";
 import { EventPage } from "./Routes";
 import { FaqPage } from "./Routes.js";
 import { ProductPageDetails } from "./Routes.js";
 import { ProfilePage } from "./Routes.js";
+import { ShopCreatePage } from "./Routes.js";
+import {ActivationPageSeller} from "./Routes.js"
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Store from "./redux/store.js";
@@ -36,6 +40,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/sign-up" element={<SignupPage />} />
             <Route path="/activation/:token" element={<ActivationPage />} />
+            <Route path="/seller/activation/:token" element={<ActivationPageSeller />} />
             <Route path="/best-selling" element={<BestSellingPage />} />
             <Route path="/products" element={<ProductPage />} />
             <Route path="/events" element={<EventPage />} />
@@ -49,6 +54,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+             <Route path="/shop-create" element={<ShopCreatePage />} />
+             <Route path="/shop-login" element={<ShopLoginPage />} />
           </Routes>
           <ToastContainer
             position="bottom-center"
