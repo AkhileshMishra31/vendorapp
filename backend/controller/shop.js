@@ -8,7 +8,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const sendMail = require("../utils/sendMail");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const sendShopToken = require("../utils/ShopToken");
-const { isAuthenticated } = require("../middleware/auth");
+const { isAuthenticated, isAuthenticatedSeller } = require("../middleware/auth");
 const Shop = require("../model/shop");
 const sendToken = require("../utils/jwtToken");
 
@@ -151,11 +151,12 @@ const createActivationToken = (shop) => {
 
 router.get(
     "/getSeller",
-    isAuthenticated,
+    isAuthenticatedSeller,
     catchAsyncError(async (req, res, next) => {
       try {
-        let shop = await Shop.findById(req.user.id);
-        if (!user) {
+        let shop = await Shop.findById(req.shop.id);
+        console.log("shop",shop)
+        if (!shop) {
           return next(new ErrorHandler("user does not exist", 500));
         }
         res.status(201).json({
