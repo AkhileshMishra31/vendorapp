@@ -26,8 +26,10 @@
   }
 
   const user = require("./controller/user");
+  const shop=require("./controller/shop")
 
   app.use("/api/v2/user", user);
+  app.use("/api/v2/shop",shop);
   app.use(ErrorHandler);
 
   module.exports = app;

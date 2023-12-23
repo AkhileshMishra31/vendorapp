@@ -146,7 +146,7 @@ router.get(
       return next(new ErrorHandler("Something went wrong", 500));
     }
   })
-);
+); 
 
 router.get(
   "/logout",
